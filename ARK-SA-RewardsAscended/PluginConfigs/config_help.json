@@ -1,0 +1,336 @@
+{
+  "Config": {
+    "UseOverride": false, //if true config is loaded from a custom specified path
+    "OverridePath": "" //specify custom config path here, you can use this to make multiple servers use the same config
+  },
+  "Rewards": {
+    "Reward1": { //reward name, can be anything unique, do not use spaces, below is an example of a reward that rewards all possible types
+      "Items": [
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponStoneClub.PrimalItem_WeaponStoneClub'",
+          "Quality": 2,
+          "ForceBlueprint": false, //if true will give a blueprint instead of the item
+          "Amount": 1,
+          "Armor": 0,
+          "Durability": 60,
+          "Damage": 140,
+          "UseRandomQuality": false, //if set to true item will use a random quality when being spawned from MinRandomQuality to MaxRandomQuality
+          "MinRandomQuality": 1,
+          "MaxRandomQuality": 10,
+          "UseRandomAmount": false, //if set to true item will use a random amount when being spawned from MinRandomAmount to MaxRandomAmount
+          "MinRandomAmount": 1,
+          "MaxRandomAmount": 5,
+          "UseRandomArmor": false, //if set to true item will use a random Armor Rating when being spawned from MinRandomArmor to MaxRandomArmor
+          "MinRandomArmor": 1,
+          "MaxRandomArmor": 1,
+          "UseRandomDurability": false, //if set to true item will use a random Durability Rating when being spawned from MinRandomDurability to MaxRandomDurability
+          "MinRandomDurability": 40,
+          "MaxRandomDurability": 100,
+          "UseRandomDamage": false, //if set to true item will use a random Damage Rating when being spawned from MinRandomDamage to MaxRandomDamage
+          "MinRandomDamage": 100,
+          "MaxRandomDamage": 199
+        }
+      ],
+      "Engrams": [ //this section unlocks engrams for players, configure engrams here
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponOneShotRifle.PrimalItem_WeaponOneShotRifle'"
+        }
+      ],
+      "Commands": [ //this section exectutes any command for the player
+        {
+          "RunAsAdmin": false,
+          "Command": "SomeCommand {eos_id} {playerid} {tribeid}"
+        }
+      ],
+      "Dinos": [ //this section spawns dinos for the player
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
+          "Level": 20,
+          "Neutered": false,
+          "Gender": "Random",
+          "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_TrikeSaddle.PrimalItemArmor_TrikeSaddle'",
+          "UseRandomLevel": false,
+          "MinRandomLevel": 1,
+          "MaxRandomLevel": 100
+        }
+      ],
+      "RandomItems": { //items configured here will be picked at random and given to the player
+        "NumToGive": 1, //the number of items to give to the player from the array
+        "AllowDuplicates": false, //if set to true guarantees no duplicate will be given from the random array, if NumToGive is more than the number of items in the array it will be clamped to the number of items in the array
+        "Items": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Resources/PrimalItemResource_MetalIngot.PrimalItemResource_MetalIngot'",
+            "Quality": 1,
+            "ForceBlueprint": false,
+            "Amount": 100,
+            "Armor": 0,
+            "Durability": 0,
+            "Damage": 0,
+            "UseRandomQuality": false,
+            "MinRandomQuality": 1,
+            "MaxRandomQuality": 100,
+            "UseRandomAmount": false,
+            "MinRandomAmount": 1,
+            "MaxRandomAmount": 10,
+            "UseRandomArmor": false,
+            "MinRandomArmor": 1,
+            "MaxRandomArmor": 100,
+            "UseRandomDurability": false,
+            "MinRandomDurability": 1,
+            "MaxRandomDurability": 100,
+            "UseRandomDamage": false,
+            "MinRandomDamage": 1,
+            "MaxRandomDamage": 100
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Resources/PrimalItemResource_Gunpowder.PrimalItemResource_Gunpowder'",
+            "Quality": 1,
+            "ForceBlueprint": false,
+            "Amount": 100,
+            "Armor": 0,
+            "Durability": 0,
+            "Damage": 0,
+            "UseRandomQuality": false,
+            "MinRandomQuality": 1,
+            "MaxRandomQuality": 100,
+            "UseRandomAmount": false,
+            "MinRandomAmount": 1,
+            "MaxRandomAmount": 10,
+            "UseRandomArmor": false,
+            "MinRandomArmor": 1,
+            "MaxRandomArmor": 100,
+            "UseRandomDurability": false,
+            "MinRandomDurability": 1,
+            "MaxRandomDurability": 100,
+            "UseRandomDamage": false,
+            "MinRandomDamage": 1,
+            "MaxRandomDamage": 100
+          }
+        ]
+      },
+      "RandomEngrams": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Engrams": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponRifle.PrimalItem_WeaponRifle'"
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponMachinedSniper.PrimalItem_WeaponMachinedSniper'"
+          }
+        ]
+      },
+      "RandomCommands": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Commands": [
+          {
+            "RunAsAdmin": false,
+            "Command": "addpoints {eos_id} 100"
+          },
+          {
+            "RunAsAdmin": false,
+            "Command": "addpoints {eos_id} 500"
+          }
+        ]
+      },
+      "RandomDinos": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Dinos": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
+            "Level": 25,
+            "Neutered": false,
+            "Gender": "Random",
+            "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_ArgentavisSaddle.PrimalItemArmor_ArgentavisSaddle'",
+            "UseRandomLevel": false,
+            "MinRandomLevel": 1,
+            "MaxRandomLevel": 100
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
+            "Level": 25,
+            "Neutered": false,
+            "Gender": "Random",
+            "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_PteroSaddle.PrimalItemArmor_PteroSaddle'",
+            "UseRandomLevel": false,
+            "MinRandomLevel": 1,
+            "MaxRandomLevel": 100
+          }
+        ]
+      }
+    },
+    "Reward2": { //below is an example of a reward that rewards just an item
+      "Items": [
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponStoneClub.PrimalItem_WeaponStoneClub'",
+          "Quality": 2,
+          "ForceBlueprint": false,
+          "Amount": 1,
+          "Armor": 0,
+          "Durability": 60,
+          "Damage": 140,
+          "UseRandomQuality": false,
+          "MinRandomQuality": 1,
+          "MaxRandomQuality": 10,
+          "UseRandomAmount": false,
+          "MinRandomAmount": 1,
+          "MaxRandomAmount": 5,
+          "UseRandomArmor": false,
+          "MinRandomArmor": 1,
+          "MaxRandomArmor": 1,
+          "UseRandomDurability": false,
+          "MinRandomDurability": 40,
+          "MaxRandomDurability": 100,
+          "UseRandomDamage": false,
+          "MinRandomDamage": 100,
+          "MaxRandomDamage": 199
+        }
+      ]
+    },
+    "Reward3": { //below is an example of a reward that rewards just an engram
+      "Engrams": [
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponOneShotRifle.PrimalItem_WeaponOneShotRifle'"
+        }
+      ]
+    },
+    "Reward4": { //below is an example of a reward that rewards just a command
+      "Commands": [
+        {
+          "RunAsAdmin": false,
+          "Command": "SomeCommand {eos_id} {playerid} {tribeid}"
+        }
+      ]
+    },
+    "Reward5": { //below is an example of a reward that rewards just a dino
+      "Dinos": [
+        {
+          "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
+          "Level": 20,
+          "Neutered": false,
+          "Gender": "Random",
+          "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_TrikeSaddle.PrimalItemArmor_TrikeSaddle'",
+          "UseRandomLevel": false,
+          "MinRandomLevel": 1,
+          "MaxRandomLevel": 100
+        }
+      ]
+    },
+    "Reward6": { //below is an example of a reward that rewards just random items
+      "RandomItems": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Items": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Resources/PrimalItemResource_MetalIngot.PrimalItemResource_MetalIngot'",
+            "Quality": 1,
+            "ForceBlueprint": false,
+            "Amount": 100,
+            "Armor": 0,
+            "Durability": 0,
+            "Damage": 0,
+            "UseRandomQuality": false,
+            "MinRandomQuality": 1,
+            "MaxRandomQuality": 100,
+            "UseRandomAmount": false,
+            "MinRandomAmount": 1,
+            "MaxRandomAmount": 10,
+            "UseRandomArmor": false,
+            "MinRandomArmor": 1,
+            "MaxRandomArmor": 100,
+            "UseRandomDurability": false,
+            "MinRandomDurability": 1,
+            "MaxRandomDurability": 100,
+            "UseRandomDamage": false,
+            "MinRandomDamage": 1,
+            "MaxRandomDamage": 100
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Resources/PrimalItemResource_Gunpowder.PrimalItemResource_Gunpowder'",
+            "Quality": 1,
+            "ForceBlueprint": false,
+            "Amount": 100,
+            "Armor": 0,
+            "Durability": 0,
+            "Damage": 0,
+            "UseRandomQuality": false,
+            "MinRandomQuality": 1,
+            "MaxRandomQuality": 100,
+            "UseRandomAmount": false,
+            "MinRandomAmount": 1,
+            "MaxRandomAmount": 10,
+            "UseRandomArmor": false,
+            "MinRandomArmor": 1,
+            "MaxRandomArmor": 100,
+            "UseRandomDurability": false,
+            "MinRandomDurability": 1,
+            "MaxRandomDurability": 100,
+            "UseRandomDamage": false,
+            "MinRandomDamage": 1,
+            "MaxRandomDamage": 100
+          }
+        ]
+      }
+    },
+    "Reward7": { //below is an example of a reward that rewards just random engrams
+      "RandomEngrams": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Engrams": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponRifle.PrimalItem_WeaponRifle'"
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Weapons/PrimalItem_WeaponMachinedSniper.PrimalItem_WeaponMachinedSniper'"
+          }
+        ]
+      }
+    },
+    "Reward8": { //below is an example of a reward that rewards just random commands
+      "RandomCommands": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Commands": [
+          {
+            "RunAsAdmin": false,
+            "Command": "addpoints {eos_id} 100"
+          },
+          {
+            "RunAsAdmin": false,
+            "Command": "addpoints {eos_id} 500"
+          }
+        ]
+      }
+    },
+    "Reward9": { //below is an example of a reward that rewards just random dinos
+      "RandomDinos": {
+        "NumToGive": 1,
+        "AllowDuplicates": false,
+        "Dinos": [
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
+            "Level": 25,
+            "Neutered": false,
+            "Gender": "Random",
+            "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_ArgentavisSaddle.PrimalItemArmor_ArgentavisSaddle'",
+            "UseRandomLevel": false,
+            "MinRandomLevel": 1,
+            "MaxRandomLevel": 100
+          },
+          {
+            "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
+            "Level": 25,
+            "Neutered": false,
+            "Gender": "Random",
+            "SaddleBlueprint": "Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_PteroSaddle.PrimalItemArmor_PteroSaddle'",
+            "UseRandomLevel": false,
+            "MinRandomLevel": 1,
+            "MaxRandomLevel": 100
+          }
+        ]
+      }
+    }
+  }
+}
