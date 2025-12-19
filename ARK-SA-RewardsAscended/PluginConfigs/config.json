@@ -3,6 +3,9 @@
     "UseOverride": false,
     "OverridePath": ""
   },
+  "General": {
+    "CryoPodItemPath": "Blueprint'/Game/Extinction/CoreBlueprints/Weapons/PrimalItem_WeaponEmptyCryopod.PrimalItem_WeaponEmptyCryopod'"
+  },
   "Rewards": {
     "Reward1": {
       "Items": [
@@ -44,6 +47,9 @@
       ],
       "Dinos": [
         {
+          "GiveInCryoPod": true,
+          "UseCryoPodCustomTimeLimit": true,
+          "CryoPodCustomTimeLimitInMinutes": 30,
           "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
           "Level": 20,
           "Neutered": false,
@@ -139,6 +145,9 @@
         "AllowDuplicates": false,
         "Dinos": [
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -149,6 +158,9 @@
             "MaxRandomLevel": 100
           },
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -207,6 +219,9 @@
     "Reward5": {
       "Dinos": [
         {
+          "GiveInCryoPod": true,
+          "UseCryoPodCustomTimeLimit": true,
+          "CryoPodCustomTimeLimitInMinutes": 30, 
           "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
           "Level": 20,
           "Neutered": false,
@@ -310,6 +325,9 @@
         "AllowDuplicates": false,
         "Dinos": [
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -320,6 +338,9 @@
             "MaxRandomLevel": 100
           },
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
             "Level": 25,
             "Neutered": false,

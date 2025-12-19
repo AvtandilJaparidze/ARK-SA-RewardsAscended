@@ -116,6 +116,214 @@ void Rewards::ApplyItemStats(TArray<UPrimalItem*> Items, int Armor, int Durabili
 	}
 }
 
+//credit to ArkShop https://github.com/ArkServerApi/ASA-Plugins/blob/master/ArkShop/ArkShop/Private/Helpers.h
+TArray<float> GetStatPoints(APrimalDinoCharacter* Dino)
+{
+	TArray<float> Floats;
+	UPrimalCharacterStatusComponent* Comp = Dino->GetCharacterStatusComponent();
+	int NumEntries = EPrimalCharacterStatusValue::MAX - 1;
+	for (int i = 0; i < NumEntries; i++)
+		Floats.Add(
+			Comp->NumberOfLevelUpPointsAppliedField()()[(EPrimalCharacterStatusValue::Type)i]
+			+
+			Comp->NumberOfMutationsAppliedTamedField()()[(EPrimalCharacterStatusValue::Type)i]
+		);
+
+	for (int i = 0; i < NumEntries; i++)
+		Floats.Add(Comp->NumberOfLevelUpPointsAppliedTamedField()()[(EPrimalCharacterStatusValue::Type)i]);
+
+	return Floats;
+}
+
+//credit to ArkShop https://github.com/ArkServerApi/ASA-Plugins/blob/master/ArkShop/ArkShop/Private/Helpers.h
+TArray<float> GetCharacterStatsAsFloats(APrimalDinoCharacter* Dino)
+{
+	TArray<float> Floats;
+	UPrimalCharacterStatusComponent* Comp = Dino->GetCharacterStatusComponent();
+	int NumEntries = EPrimalCharacterStatusValue::MAX - 1;
+	for (int i = 0; i < NumEntries; i++)
+		Floats.Add(Comp->CurrentStatusValuesField()()[(EPrimalCharacterStatusValue::Type)i]);
+
+	for (int i = 0; i < NumEntries; i++)
+		Floats.Add(Comp->MaxStatusValuesField()()[(EPrimalCharacterStatusValue::Type)i]);
+
+	for (int i = 0; i < NumEntries; i++)
+		Floats.Add(Comp->GetStatusValueRecoveryRate((EPrimalCharacterStatusValue::Type)i));
+
+	Floats.Add((float)Dino->bIsFemale()());
+
+	int len = Floats.Num();
+
+	Floats.Append(GetStatPoints(Dino));
+	Floats.Add(len);
+	return Floats;
+}
+
+//credit to ArkShop https://github.com/ArkServerApi/ASA-Plugins/blob/master/ArkShop/ArkShop/Private/Helpers.h
+TArray<FString> GetSaddleData(UPrimalItem* Saddle)
+{
+	TArray<FString> Data;
+	TArray<FString> Colors;
+
+	Data.Add("");
+	Data.Add("");
+	Data.Add("");
+	Colors.Add("0");
+	Colors.Add("0");
+	Colors.Add("0");
+
+	if (!Saddle)
+	{
+		Data.Append(Colors);
+		return Data;
+	}
+
+	const float Modifier = Saddle->GetItemStatModifier(EPrimalItemStat::Armor);
+	Data[0] = FString::FromInt(FMath::Floor(Modifier));
+
+	FLinearColor FColor;
+	UPrimalGameData* GameData = AsaApi::GetApiUtils().GetGameData();
+	auto Index = Saddle->ItemQualityIndexField();
+
+	auto entry = GameData->ItemQualityDefinitionsField()[Index];
+	FColor = entry.QualityColorField();
+
+	Colors[0] = FString(std::to_string(FColor.R));
+	Colors[1] = FString(std::to_string(FColor.G));
+	Colors[2] = FString(std::to_string(FColor.B));
+	FString QualityNameStr = entry.QualityNameField();
+
+	Data[1] = FString::Format("{} {}", API::Tools::Utf8Encode(*QualityNameStr), API::Tools::Utf8Encode(*Saddle->DescriptiveNameBaseField()));
+	Data[2] = AsaApi::GetApiUtils().GetBlueprint(Saddle);
+
+	Data.Append(Colors);
+	return Data;
+}
+
+//credit to ArkShop https://github.com/ArkServerApi/ASA-Plugins/blob/master/ArkShop/ArkShop/Private/Helpers.h
+TArray<FString> GetDinoDataStrings(APrimalDinoCharacter* Dino, const FString& DinoNameInMAP, const FString& DinoName, UPrimalItem* Saddle)
+{
+	TArray<FString> Strings;
+	Strings.Add(DinoNameInMAP);
+	Strings.Add(DinoName);
+
+	FString Temp;
+	Dino->GetColorSetInidcesAsString(&Temp);
+	Strings.Add(Temp);
+
+	Strings.Add(Dino->bNeutered()() ? "NEUTERED" : "");
+
+	Temp = "";
+	if (Dino->bUsesGender()())
+		if (Dino->bIsFemale()())
+			Temp = "FEMALE";
+		else
+			Temp = "MALE";
+	Strings.Add(Temp);
+	Strings.Add(""); // empty
+	Strings.Add("0"); // should get bitmasks for buffs but doesn't seem to get used
+
+	//strings.Append(GetSaddleData(saddle)); 
+	//bypassing saddle data for now
+	Strings.Add("");
+	Strings.Add("");
+	Strings.Add("");
+	Strings.Add("0");
+	Strings.Add("0");
+	Strings.Add("0");
+
+	Strings.Add(""); // extra data like harvest levels - not needed
+	Temp = "";
+	Dino->GetCurrentDinoName(&Temp, nullptr);
+	Strings.Add(Temp);
+	return Strings;
+}
+
+//credit to ArkShop https://github.com/ArkServerApi/ASA-Plugins/blob/master/ArkShop/ArkShop/Private/ArkShop.cpp
+FCustomItemData GetCryoPodData(APrimalDinoCharacter* Dino, UPrimalItem* Saddle)
+{
+	FCustomItemData CustomItemData;
+
+	FARKDinoData DinoData;
+	Dino->GetDinoData(&DinoData);
+
+	//
+	// Custom Data Name
+	//
+	CustomItemData.CustomDataName = FName("Dino", EFindName::FNAME_Add);
+
+	TArray<FName> Names;
+	Dino->GetColorSetNamesAsArray(&Names);
+	CustomItemData.CustomDataNames = Names;
+	// one time use settings
+	CustomItemData.CustomDataNames.Add(FName("MissionTemporary", EFindName::FNAME_Add));
+	CustomItemData.CustomDataNames.Add(FName("None", EFindName::FNAME_Find));
+
+	//
+	// Custom Data Floats
+	//
+	CustomItemData.CustomDataFloats = GetCharacterStatsAsFloats(Dino);
+
+	//
+	// Custom Data Doubles
+	//
+	auto T1 = AsaApi::GetApiUtils().GetShooterGameMode()->GetWorld()->TimeSecondsField();
+	CustomItemData.CustomDataDoubles.Doubles.Add(T1);
+	CustomItemData.CustomDataDoubles.Doubles.Add(Dino->BabyNextCuddleTimeField() - T1);
+	CustomItemData.CustomDataDoubles.Doubles.Add(Dino->NextAllowedMatingTimeField());
+
+	const float D1 = static_cast<float>(Dino->RandomMutationsMaleField());
+	const double D2 = static_cast<double>(D1);
+	CustomItemData.CustomDataDoubles.Doubles.Add(D2);
+
+	const float D3 = static_cast<float>(Dino->RandomMutationsFemaleField());
+	const double D4 = static_cast<double>(D3);
+	CustomItemData.CustomDataDoubles.Doubles.Add(D4);
+
+	auto stat = Dino->MyCharacterStatusComponentField();
+	if (stat)
+	{
+		const double d5 = static_cast<double>(stat->DinoImprintingQualityField());
+		CustomItemData.CustomDataDoubles.Doubles.Add(d5);
+	}
+	CustomItemData.CustomDataDoubles.Doubles.Add(std::time(nullptr));
+
+	//
+	// Custom Data Strings
+	//
+	CustomItemData.CustomDataStrings = GetDinoDataStrings(Dino, DinoData.DinoNameInMap, DinoData.DinoName, Saddle);
+
+	//
+	// Custom Data Classes
+	//
+	CustomItemData.CustomDataClasses.Add(DinoData.DinoClass);
+
+	//
+	//	Custom Data Soft Classes
+	//
+	//customItemData.CustomDataSoftClasses.Add(dinoData.DinoClass);
+
+	//
+	// Custom Data Bytes
+	//
+	FCustomItemByteArray dinoBytes, saddlebytes;
+	dinoBytes.Bytes = DinoData.DinoData;
+	CustomItemData.CustomDataBytes.ByteArrays.Add(dinoBytes);
+
+	if (Saddle)
+	{
+		Saddle->GetItemBytes(&saddlebytes.Bytes);
+		CustomItemData.CustomDataBytes.ByteArrays.Add(saddlebytes);
+	}
+	CustomItemData.CustomDataBytes.ByteArrays.Add(FCustomItemByteArray());
+
+	FCustomItemByteArray arr = FCustomItemByteArray();
+	arr.Bytes.Add(Dino->TamedAggressionLevelField());
+	CustomItemData.CustomDataBytes.ByteArrays.Add(arr);
+
+	return CustomItemData;
+}
+
 void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj) const
 {
 	const std::string& SBlueprint = Obj.value("Blueprint", std::string());
@@ -305,6 +513,11 @@ void Rewards::RewardDino(AShooterPlayerController* PC, const nlohmann::json& Obj
 		return;
 	}
 
+	const std::string CryoPodBlueprint = config["General"].value("CryoPodItemPath", 
+		"Blueprint'/Game/Extinction/CoreBlueprints/Weapons/PrimalItem_WeaponEmptyCryopod.PrimalItem_WeaponEmptyCryopod'");
+
+	const bool GiveInCryoPod = Obj.value("GiveInCryoPod", false);
+
 	const int Level = Obj.value("Level", 1);
 	const bool Neutered = Obj.value("Neutered", false);
 	const std::string& Gender = Obj.value("Gender", "Random");
@@ -341,11 +554,50 @@ void Rewards::RewardDino(AShooterPlayerController* PC, const nlohmann::json& Obj
 		}
 	}
 
+	UPrimalItem* DinoSaddle = nullptr;
+
 	if (!SaddleBlueprint.empty() && Dino->MyInventoryComponentField())
 	{
 		FString FSaddleBlueprint(SaddleBlueprint);
 		UClass* SaddleClass = UVictoryCore::BPLoadClass(FSaddleBlueprint);
-		UPrimalItem::AddNewItem(SaddleClass, Dino->MyInventoryComponentField(), true, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, true, true);
+		DinoSaddle = UPrimalItem::AddNewItem(SaddleClass, Dino->MyInventoryComponentField(), true, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, true, true);
+	}
+
+	if (GiveInCryoPod)
+	{
+		TSubclassOf<UPrimalItem> CryoPodClass = UVictoryCore::BPLoadClass(FString(CryoPodBlueprint));
+		UPrimalItem* CryoPod = UPrimalItem::AddNewItem(CryoPodClass, nullptr, false, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, false, false);
+
+		if (!CryoPod)
+		{
+			return;
+		}
+
+		const bool UseCryoPodCustomLimitTime = Obj.value("UseCryoPodCustomTimeLimit", false);
+		const int CryoPodTimeLimitMinutes = Obj.value("CryoPodCustomTimeLimitInMinutes", 60);
+
+		if (UseCryoPodCustomLimitTime)
+		{
+			CryoPod->AddItemDurability((CryoPod->ItemDurabilityField() - (CryoPodTimeLimitMinutes * 60)) * -1, false);
+		}
+
+		FCustomItemData CustomItemData = GetCryoPodData(Dino, DinoSaddle);
+		CryoPod->SetCustomItemData(&CustomItemData);
+		CryoPod->UpdatedItem(true, false);
+
+		if (!PC->GetPlayerInventoryComponent())
+		{
+			return;
+		}
+
+		UPrimalItem* UpdatedCryoPod = PC->GetPlayerInventoryComponent()->AddItemObject(CryoPod);
+
+		if (!UpdatedCryoPod)
+		{
+			return;
+		}
+
+		Dino->Destroy(true, false);
 	}
 }
 

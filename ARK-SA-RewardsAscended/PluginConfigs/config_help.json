@@ -3,6 +3,9 @@
     "UseOverride": false, //if true config is loaded from a custom specified path
     "OverridePath": "" //specify custom config path here, you can use this to make multiple servers use the same config
   },
+  "General": {
+    "CryoPodItemPath": "Blueprint'/Game/Extinction/CoreBlueprints/Weapons/PrimalItem_WeaponEmptyCryopod.PrimalItem_WeaponEmptyCryopod'" //sets the cryopod item used to store dinos, default is the game default cryopod
+  },
   "Rewards": {
     "Reward1": { //reward name, can be anything unique, do not use spaces, below is an example of a reward that rewards all possible types
       "Items": [
@@ -44,6 +47,9 @@
       ],
       "Dinos": [ //this section spawns dinos for the player
         {
+          "GiveInCryoPod": true,// if true the dino will be given in a cryopod, if false it will be spawned next to the player
+          "UseCryoPodCustomTimeLimit": true, //if true the cryopod will use a custom time limit specified below
+          "CryoPodCustomTimeLimitInMinutes": 30, //the custom time limit in minutes for the cryopod, only used if UseCryoPodCustomTimeLimit is true
           "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
           "Level": 20,
           "Neutered": false,
@@ -139,6 +145,9 @@
         "AllowDuplicates": false,
         "Dinos": [
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -149,6 +158,9 @@
             "MaxRandomLevel": 100
           },
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -207,6 +219,9 @@
     "Reward5": { //below is an example of a reward that rewards just a dino
       "Dinos": [
         {
+          "GiveInCryoPod": true,
+          "UseCryoPodCustomTimeLimit": true,
+          "CryoPodCustomTimeLimitInMinutes": 30,
           "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Trike/trike_Character_BP.Trike_Character_BP'",
           "Level": 20,
           "Neutered": false,
@@ -310,6 +325,9 @@
         "AllowDuplicates": false,
         "Dinos": [
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Argentavis/Argent_Character_BP.Argent_Character_BP'",
             "Level": 25,
             "Neutered": false,
@@ -320,6 +338,9 @@
             "MaxRandomLevel": 100
           },
           {
+            "GiveInCryoPod": true,
+            "UseCryoPodCustomTimeLimit": true,
+            "CryoPodCustomTimeLimitInMinutes": 30,
             "Blueprint": "Blueprint'/Game/PrimalEarth/Dinos/Ptero/Ptero_Character_BP.Ptero_Character_BP'",
             "Level": 25,
             "Neutered": false,
