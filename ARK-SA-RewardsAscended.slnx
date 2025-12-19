@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ARK-SA-RewardsAscended/ARK-SA-RewardsAscended.vcxproj" />
+  <Project Path="ARK-SA-RewardsAscended/ARK-SA-RewardsAscended.vcxproj" Id="5c637eba-17b3-4f1b-929b-178139ec3179" />
 </Solution>
