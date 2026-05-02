@@ -448,7 +448,8 @@ void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj
 	}
 	else
 	{
-		Inventory->IncrementItemTemplateQuantity(ItemClass, FinalAmount, true, ForceBlueprint, nullptr, nullptr, false, false, false, false, true, false, true, true, false);
+		TSubclassOf<UPrimalItem> ParamClass;
+		Inventory->IncrementItemTemplateQuantity(ItemClass, FinalAmount, true, ForceBlueprint, nullptr, nullptr, false, false, false, false, true, false, true, true, false, ParamClass);
 	}
 }
 
