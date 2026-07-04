@@ -419,6 +419,7 @@ void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj
 	if (StacksInOne || ForceBlueprint)
 	{
 		TArray<UPrimalItem*> OutItems{};
+		UWorld* World = AsaApi::GetApiUtils().GetWorld();
 		for (int i = 0; i < FinalAmount; ++i)
 		{
 			OutItems.Add(
@@ -439,7 +440,9 @@ void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj
 					false,
 					true,
 					true,
-					true
+					true,
+					false,
+					World
 				)
 			);
 		}
@@ -449,7 +452,7 @@ void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj
 	else
 	{
 		TSubclassOf<UPrimalItem> ParamClass;
-		Inventory->IncrementItemTemplateQuantity(ItemClass, FinalAmount, true, ForceBlueprint, nullptr, nullptr, false, false, false, false, true, false, true, true, false, ParamClass);
+		Inventory->IncrementItemTemplateQuantity(ItemClass, FinalAmount, true, ForceBlueprint, nullptr, nullptr, false, false, false, false, true, false, true, true, false, false, ParamClass);
 	}
 }
 
@@ -561,13 +564,15 @@ void Rewards::RewardDino(AShooterPlayerController* PC, const nlohmann::json& Obj
 	{
 		FString FSaddleBlueprint(SaddleBlueprint);
 		UClass* SaddleClass = UVictoryCore::BPLoadClass(FSaddleBlueprint);
-		DinoSaddle = UPrimalItem::AddNewItem(SaddleClass, Dino->MyInventoryComponentField(), true, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, true, true);
+		UWorld* World = AsaApi::GetApiUtils().GetWorld();
+		DinoSaddle = UPrimalItem::AddNewItem(SaddleClass, Dino->MyInventoryComponentField(), true, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, true, true, false, World);
 	}
 
 	if (GiveInCryoPod)
 	{
 		TSubclassOf<UPrimalItem> CryoPodClass = UVictoryCore::BPLoadClass(FString(CryoPodBlueprint));
-		UPrimalItem* CryoPod = UPrimalItem::AddNewItem(CryoPodClass, nullptr, false, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, false, false);
+		UWorld* World = AsaApi::GetApiUtils().GetWorld();
+		UPrimalItem* CryoPod = UPrimalItem::AddNewItem(CryoPodClass, nullptr, false, false, 0, false, 0, false, 0, false, nullptr, 0, false, false, true, false, false, false, World);
 
 		if (!CryoPod)
 		{
