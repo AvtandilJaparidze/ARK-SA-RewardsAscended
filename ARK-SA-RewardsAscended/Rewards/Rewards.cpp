@@ -410,7 +410,7 @@ void Rewards::RewardItem(AShooterPlayerController* PC, const nlohmann::json& Obj
 		}
 	}
 
-	UPrimalInventoryComponent* Inventory = PC->GetPlayerInventoryComponent();
+	UPrimalInventoryComponent* Inventory = PC->GetPlayerInventory();
 	if (!Inventory)
 	{
 		return;
@@ -591,12 +591,12 @@ void Rewards::RewardDino(AShooterPlayerController* PC, const nlohmann::json& Obj
 		CryoPod->SetCustomItemData(&CustomItemData);
 		CryoPod->UpdatedItem(true, false);
 
-		if (!PC->GetPlayerInventoryComponent())
+		if (!PC->GetPlayerInventory())
 		{
 			return;
 		}
 
-		UPrimalItem* UpdatedCryoPod = PC->GetPlayerInventoryComponent()->AddItemObject(CryoPod);
+		UPrimalItem* UpdatedCryoPod = PC->GetPlayerInventory()->AddItemObject(CryoPod);
 
 		if (!UpdatedCryoPod)
 		{

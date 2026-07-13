@@ -1,6 +1,6 @@
 {
   "FullName": "Rewards Ascended",
   "Description": "Rewards System For Ark Survival Ascended",
-  "Version": 1.04,
-  "MinApiVersion": 1.19
+  "Version": 1.1,
+  "MinApiVersion": 2.0
 }
