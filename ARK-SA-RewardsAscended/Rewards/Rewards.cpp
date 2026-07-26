@@ -120,7 +120,7 @@ void Rewards::ApplyItemStats(TArray<UPrimalItem*> Items, int Armor, int Durabili
 TArray<float> GetStatPoints(APrimalDinoCharacter* Dino)
 {
 	TArray<float> Floats;
-	UPrimalCharacterStatusComponent* Comp = Dino->GetCharacterStatusComponent();
+	UPrimalCharacterStatusComponent* Comp = Dino->MyCharacterStatusComponentField();
 	int NumEntries = EPrimalCharacterStatusValue::MAX - 1;
 	for (int i = 0; i < NumEntries; i++)
 		Floats.Add(
@@ -139,7 +139,7 @@ TArray<float> GetStatPoints(APrimalDinoCharacter* Dino)
 TArray<float> GetCharacterStatsAsFloats(APrimalDinoCharacter* Dino)
 {
 	TArray<float> Floats;
-	UPrimalCharacterStatusComponent* Comp = Dino->GetCharacterStatusComponent();
+	UPrimalCharacterStatusComponent* Comp = Dino->MyCharacterStatusComponentField();
 	int NumEntries = EPrimalCharacterStatusValue::MAX - 1;
 	for (int i = 0; i < NumEntries; i++)
 		Floats.Add(Comp->CurrentStatusValuesField()()[(EPrimalCharacterStatusValue::Type)i]);
